@@ -1,0 +1,13 @@
+version: "1"
+
+services:
+  fastapi:
+    image: img-fastapi-facturacion
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fastapi-facturacion
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
