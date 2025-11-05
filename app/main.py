@@ -1,7 +1,23 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+# Importación de rutas
+from app.routes.tipos_identificacion import tipos_identificacion_router
+# from app.routers.producto import producto_router
 
-app = FastAPI()
+app = FastAPI(title='Facturación - API')
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World estado funcionando"}
+origins = [
+    'http://localhost:4200'
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+prefix = '/api'
+app.include_router(tipos_identificacion_router, prefix=prefix)
+# app.include_router(producto_router, prefix=prefix)

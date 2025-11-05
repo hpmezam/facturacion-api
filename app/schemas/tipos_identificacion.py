@@ -3,24 +3,18 @@ from sqlmodel import SQLModel, Field
 from typing import Optional
 
 class TipoIdentificacionBase(SQLModel):
-    codigo: str = Field(index=True, unique=True, max_length=10)
+    codigo: str
     nombre: str
     descripcion: Optional[str] = None
     longitud: int
     patron_regex: str
-
-
-class TipoIdentificacion(TipoIdentificacionBase, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-
+    activo: bool = True
 
 class TipoIdentificacionCreate(TipoIdentificacionBase):
     pass
 
-
 class TipoIdentificacionRead(TipoIdentificacionBase):
-    id: int
-
+    pass
 
 class TipoIdentificacionUpdate(SQLModel):
     codigo: Optional[str] = None
@@ -28,3 +22,4 @@ class TipoIdentificacionUpdate(SQLModel):
     descripcion: Optional[str] = None
     longitud: Optional[int] = None
     patron_regex: Optional[str] = None
+    activo: Optional[bool] = None
