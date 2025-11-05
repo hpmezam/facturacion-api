@@ -8,3 +8,5 @@ class TipoIdentificacion(SQLModel, table=True):
     descripcion: Optional[str] = None
     longitud: int
     patron_regex: str
+    
+    
