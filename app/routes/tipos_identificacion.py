@@ -7,35 +7,32 @@ from app.schemas.tipos_identificacion import (
     TipoIdentificacionUpdate,
 )
 from app.controllers.tipos_identificacion import (
-    crear_tipo_identificacion,
-    obtener_tipo_identificacions,
-    obtener_tipo_identificacion_por_id,
-    actualizar_tipo_identificacion,
-    eliminar_tipo_identificacion
+    crearTipoIdentificacion,
+    obtenerTipoIdentificacions, obtenerTipoIdentificacionPorId, actualizarTipoIdentificacion, eliminarTipoIdentificacion
 )
 
 tipos_identificacion_router = APIRouter(prefix='/tipo_identificacion', tags=['Tipos de Identificación'])
 
 @tipos_identificacion_router.post('/', response_model=TipoIdentificacionRead)
-def crear_tipo_de_identificacion_endpoint(tipoIdentificacion: TipoIdentificacionCreate, db: Session = Depends(get_db)):
-    return crear_tipo_identificacion(db, tipoIdentificacion)
+def crear_tipo_de_identificacion(tipoIdentificacion: TipoIdentificacionCreate, db: Session = Depends(get_db)):
+    return crearTipoIdentificacion(db, tipoIdentificacion)
 
 @tipos_identificacion_router.get('/', response_model=list[TipoIdentificacionRead])
-def obtener_tipos_identificacion_endpoint(db: Session = Depends(get_db)):
-    return obtener_tipo_identificacions(db)
+def obtener_tipos_identificacion(db: Session = Depends(get_db)):
+    return obtenerTipoIdentificacions(db)
 
 @tipos_identificacion_router.get('/{id}', response_model=TipoIdentificacionRead)
-def obtener_tipo_identificacion_por_id_endpoint(id: int, db: Session = Depends(get_db)):
-    return obtener_tipo_identificacion_por_id(db, id)
+def obtener_tipo_identificacion_por_id(id: int, db: Session = Depends(get_db)):
+    return obtenerTipoIdentificacionPorId(db, id)
 
 @tipos_identificacion_router.put('/{id}', response_model=TipoIdentificacionRead)
-def actualizar_tipo_identificacion_endpoint(id: int, tipoIdentificacion: TipoIdentificacionUpdate, db: Session = Depends(get_db)):
-    return actualizar_tipo_identificacion(db, id, tipoIdentificacion)
+def actualizar_tipo_identificacion(id: int, tipoIdentificacion: TipoIdentificacionUpdate, db: Session = Depends(get_db)):
+    return actualizarTipoIdentificacion(db, id, tipoIdentificacion)
 
 @tipos_identificacion_router.delete('/{id}', status_code=204)
-def eliminar_tipo_identificacion_endpoint(id: int, session: Session = Depends(get_db)):
+def eliminar_tipo_identificacion(id: int, session: Session = Depends(get_db)):
     """
     Elimina un tipo de identificación por su ID.
     Retorna un mensaje de confirmación si se elimina correctamente.
     """
-    return eliminar_tipo_identificacion(session, id)
+    return eliminarTipoIdentificacion(session, id)
