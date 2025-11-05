@@ -8,7 +8,7 @@ from app.schemas.tipos_identificacion import (
 )
 
 # Crear un nuevo tipo de identificación
-def crear_tipo_identificacion(db: Session, tipo_identificacion: TipoIdentificacionCreate) -> TipoIdentificacionRead:
+def crearTipoIdentificacion(db: Session, tipo_identificacion: TipoIdentificacionCreate) -> TipoIdentificacionRead:
     # Comprobar si ya existe un tipo de identificación con el mismo nombre
     existe = db.exec(select(TipoIdentificacion).where(TipoIdentificacion.nombre == tipo_identificacion.nombre)).first()
     if existe:
@@ -20,11 +20,11 @@ def crear_tipo_identificacion(db: Session, tipo_identificacion: TipoIdentificaci
     return nuevo
 
 # Obtener todos los tipos de identificación
-def obtener_tipo_identificacions(db: Session) -> list[TipoIdentificacionRead]:
+def obtenerTipoIdentificacions(db: Session) -> list[TipoIdentificacionRead]:
     return db.exec(select(TipoIdentificacion)).all()
 
 # Obtener un tipo de identificación por ID
-def obtener_tipo_identificacion_por_id(db: Session, id: int) -> TipoIdentificacionRead:
+def obtenerTipoIdentificacionPorId(db: Session, id: int) -> TipoIdentificacionRead:
     # 1. Obtener objeto existente
     tipo_identificacion = db.get(TipoIdentificacion, id)
     if not tipo_identificacion:
@@ -32,7 +32,7 @@ def obtener_tipo_identificacion_por_id(db: Session, id: int) -> TipoIdentificaci
     return tipo_identificacion
 
 # Actualizar un tipo de identificación
-def actualizar_tipo_identificacion(db: Session, id: int, tipo_identificacion: TipoIdentificacionUpdate) -> TipoIdentificacionRead:
+def actualizarTipoIdentificacion(db: Session, id: int, tipo_identificacion: TipoIdentificacionUpdate) -> TipoIdentificacionRead:
     # 1. Obtener objeto existente
     existente = db.get(TipoIdentificacion, id)
     if not existente:
@@ -69,7 +69,7 @@ def actualizar_tipo_identificacion(db: Session, id: int, tipo_identificacion: Ti
     return existente
 
 # Eliminar un tipo de identificación
-def eliminar_tipo_identificacion(db: Session, id: int) -> dict:
+def eliminarTipoIdentificacion(db: Session, id: int) -> dict:
     tipo_identificacion = db.get(TipoIdentificacion, id)
     if not tipo_identificacion:
         raise HTTPException(
