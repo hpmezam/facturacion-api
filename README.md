@@ -42,25 +42,48 @@ facturacion-api/
 ├── facturacion.db           # Base de datos SQLite (solo para desarrollo)
 ├── requirements.txt         # Dependencias del proyecto
 ├── README.md                # Documentación principal
-│
 └── app/
     ├── main.py              # Punto de entrada principal de la aplicación FastAPI
-    │
     ├── config/              # Configuración de base de datos y entorno
-    │   └── session.py
-    │
     ├── controllers/         # Lógica de negocio (operaciones CRUD)
-    │   └── tipos_identificacion.py
-    │
     ├── models/              # Modelos SQLModel (entidades de base de datos)
-    │   └── tipos_identificacion.py
-    │
-    ├── routes/              # Definición de endpoints y routers de la API
-    │   └── tipos_identificacion.py
-    │
-    ├── schemas/             # Esquemas Pydantic para validaciones
-    │   └── tipos_identificacion.py
-    │
-    └── __pycache__/         # Archivos compilados automáticamente por Python
-
+    ├── routes/              # Definición de endpoints y routers de la API          
+    └── schemas/             # Esquemas Pydantic para validaciones
 ```
+
+## 🚀 Instalación y ejecución local
+
+1. Clona el repositorio:
+
+```bash
+git clone https://github.com/hpmezam/facturacion-api.git
+cd facturacion-api
+```
+
+2. Construir la imagen y levantar los contenedores:
+
+```bash
+docker-compose up
+```
+
+3. Detener los servicios:
+
+```bash
+docker-compose down
+```
+
+## 🔒 Seguridad
+
+- Tokens JWT con expiración.
+- Encriptación de contraseñas con `bcrypt`.
+- Validación de constraseñas mediante `Pydantic`.
+- Middleware para control de acceso y manejo de errores.
+
+## 🧪 Pruebas
+
+Las pruebas unitarias y de integración se implementarán próximamente con `pytest` y `httpx` para testear los endpoints.
+
+## 🚀 Desarrolladores
+Ing. Marco Inlago
+Ing. Henry Meza
+Sr. Oliver Zamora
