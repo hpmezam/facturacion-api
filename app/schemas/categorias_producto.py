@@ -11,6 +11,7 @@ class CategoriaProductoCreate(CategoriaProductoBase):
     pass
 
 class CategoriaProductoRead(CategoriaProductoBase):
+    id: int
     pass
 
 class CategoriaProductoUpdate(SQLModel):
