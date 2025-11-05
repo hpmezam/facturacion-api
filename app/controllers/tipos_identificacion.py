@@ -1,40 +1,82 @@
-# crud.py
 from sqlmodel import Session, select
-from models.schema import (
-    TipoIdentificacion,
+from fastapi import HTTPException, status
+from app.models.tipos_identificacion import TipoIdentificacion
+from app.schemas.tipos_identificacion import (
     TipoIdentificacionCreate,
-    TipoIdentificacionUpdate
+    TipoIdentificacionRead,
+    TipoIdentificacionUpdate,
 )
 
-def get_tipos_identificacion(session: Session):
-    statement = select(TipoIdentificacion)
-    return session.exec(statement).all()
+# Crear un nuevo tipo de identificación
+def crear_tipo_identificacion(db: Session, tipo_identificacion: TipoIdentificacionCreate) -> TipoIdentificacionRead:
+    # Comprobar si ya existe un tipo de identificación con el mismo nombre
+    existe = db.exec(select(TipoIdentificacion).where(TipoIdentificacion.nombre == tipo_identificacion.nombre)).first()
+    if existe:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"El tipo de identificación con nombre '{tipo_identificacion.nombre}' ya existe.")
+    nuevo = TipoIdentificacion(**tipo_identificacion.model_dump())
+    db.add(nuevo)
+    db.commit()
+    db.refresh(nuevo)
+    return nuevo
 
-def get_tipo_identificacion(session: Session, tipo_id: int):
-    return session.get(TipoIdentificacion, tipo_id)
+# Obtener todos los tipos de identificación
+def obtener_tipo_identificacions(db: Session) -> list[TipoIdentificacionRead]:
+    return db.exec(select(TipoIdentificacion)).all()
 
-def create_tipo_identificacion(session: Session, tipo: TipoIdentificacionCreate):
-    db_tipo = TipoIdentificacion.from_orm(tipo)
-    session.add(db_tipo)
-    session.commit()
-    session.refresh(db_tipo)
-    return db_tipo
+# Obtener un tipo de identificación por ID
+def obtener_tipo_identificacion_por_id(db: Session, id: int) -> TipoIdentificacionRead:
+    # 1. Obtener objeto existente
+    tipo_identificacion = db.get(TipoIdentificacion, id)
+    if not tipo_identificacion:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Tipo de identificación con id '{id}' no encontrado.")
+    return tipo_identificacion
 
-def update_tipo_identificacion(session: Session, tipo_id: int, tipo_data: TipoIdentificacionUpdate):
-    db_tipo = session.get(TipoIdentificacion, tipo_id)
-    if not db_tipo:
-        return None
-    for key, value in tipo_data.dict(exclude_unset=True).items():
-        setattr(db_tipo, key, value)
-    session.add(db_tipo)
-    session.commit()
-    session.refresh(db_tipo)
-    return db_tipo
+# Actualizar un tipo de identificación
+def actualizar_tipo_identificacion(db: Session, id: int, tipo_identificacion: TipoIdentificacionUpdate) -> TipoIdentificacionRead:
+    # 1. Obtener objeto existente
+    existente = db.get(TipoIdentificacion, id)
+    if not existente:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Tipo de identificación con id '{id}' no encontrado.")
+    
+    # 2. Obtener solo los campos que se proporcionaron
+    datos_por_actualizar = tipo_identificacion.model_dump(exclude_unset=True)
+    
+    # 3. Comprobar si existe un tipo de identificación con el mismo nombre
+    if 'nombre' in datos_por_actualizar:
+        duplicado = db.exec(
+            select(TipoIdentificacion)
+            .where(TipoIdentificacion.nombre == datos_por_actualizar['nombre'])
+            .where(TipoIdentificacion.id != id)
+        ).first()
+        if duplicado:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"El tipo de identificación con nombre '{datos_por_actualizar['nombre']}' ya existe.")
+        
+    # 4. Comprobar si los nuevos valores difieren de los actuales
+    no_cambios = all(
+        getattr(existente, clave) == valor
+        for clave, valor in datos_por_actualizar.items()
+    )
+    if no_cambios:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No se proporcionaron cambios para actualizar el tipo de identificación.")
+    
+    # 5. Aplicar actualizaciones
+    for clave, valor in datos_por_actualizar.items():
+        setattr(existente, clave, valor)
+        
+    db.add(existente)
+    db.commit()
+    db.refresh(existente)
+    return existente
 
-def delete_tipo_identificacion(session: Session, tipo_id: int):
-    db_tipo = session.get(TipoIdentificacion, tipo_id)
-    if not db_tipo:
-        return None
-    session.delete(db_tipo)
-    session.commit()
-    return db_tipo
+# Eliminar un tipo de identificación
+def eliminar_tipo_identificacion(db: Session, id: int) -> dict:
+    tipo_identificacion = db.get(TipoIdentificacion, id)
+    if not tipo_identificacion:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, 
+            detail=f"Tipo de identificación con id '{id}' no encontrado.")
+    
+    nombre = tipo_identificacion.nombre
+    db.delete(tipo_identificacion)
+    db.commit()
+    return {"mensaje": f"Tipo de identificación '{nombre}' eliminado correctamente."}
