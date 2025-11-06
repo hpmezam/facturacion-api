@@ -33,6 +33,6 @@ def obtener_categoria_producto_por_id(id: int, db: Session = Depends(get_db)):
 def actualizar_categoria_producto(id: int, categoria_producto: CategoriaProductoUpdate, db: Session = Depends(get_db)):
     return actualizarCategoriaProducto(db, id, categoria_producto)
 
-@categorias_producto_router.delete('/{id}', status_code=204)
-def eliminar_categoria_producto(id: int, session: Session = Depends(get_db)):
-    return eliminarCategoriaProducto(session, id)
+@categorias_producto_router.delete('/{id}', status_code=200)
+def eliminar_categoria_producto(id: int, db: Session = Depends(get_db)):
+    return eliminarCategoriaProducto(db, id)

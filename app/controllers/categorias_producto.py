@@ -46,10 +46,11 @@ def actualizarCategoriaProducto(db: Session, id: int, categoria_producto: Catego
     db.refresh(existente)
     return existente
 
-def eliminarCategoriaProducto(db: Session, id: int) -> None:
+def eliminarCategoriaProducto(db: Session, id: int) -> dict:
     categoria_producto = db.get(CategoriaProducto, id)
     if not categoria_producto:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Categoría de producto con id '{id}' no encontrada.")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, 
+                            detail=f"Categoría de producto con id '{id}' no encontrada.")
     db.delete(categoria_producto)
     db.commit()
     return {"detail": f"Categoría de producto con id '{id}' eliminada correctamente."}
