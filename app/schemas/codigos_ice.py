@@ -1,10 +1,11 @@
 from sqlmodel import SQLModel, Field
 from typing import Optional
+from decimal import Decimal
 
 class CodigoICE(SQLModel):
     codigo: str
     descripcion: str
-    porcentaje: float
+    porcentaje: Decimal
     activo: bool = True
 
 class CodigoICECreate(CodigoICE):
@@ -17,7 +18,7 @@ class CodigoICERead(CodigoICE):
 class CodigoICEUpdate(SQLModel):
     codigo: Optional[str] = None
     descripcion: Optional[str] = None
-    porcentaje: Optional[float] = None
+    porcentaje: Optional[Decimal] = None
     activo: Optional[bool] = None
     
 

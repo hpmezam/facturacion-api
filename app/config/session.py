@@ -5,6 +5,7 @@ from app.models import (
     tipos_identificacion, 
     unidades_medida,
     impuestos,
+    productos,
     codigos_ice
 )
 DATABASE_URL = "sqlite:///./facturacion.db"
