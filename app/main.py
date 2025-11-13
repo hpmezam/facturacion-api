@@ -23,4 +23,5 @@ prefix = '/api'
 app.include_router(tipos_identificacion_router, prefix=prefix)
 app.include_router(categorias_producto_router, prefix=prefix)
 
+
 # app.include_router(producto_router, prefix=prefix)
