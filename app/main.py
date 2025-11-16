@@ -6,6 +6,8 @@ from app.routes.categorias_producto import categorias_producto_router
 from app.routes.empresas import empresas_router
 from app.routes.establecimientos import establecimientos_router
 from app.routes.certificados_difgitales import certificados_router
+from app.routes.numeraciones_sri import numeraciones_sri_router
+from app.routes.tipos_comprobante import tipos_comprobante_router
 # from app.routers.producto import producto_router
 
 app = FastAPI(title='Facturación - API')
@@ -28,6 +30,7 @@ app.include_router(categorias_producto_router, prefix=prefix)
 app.include_router(empresas_router, prefix=prefix)
 app.include_router(establecimientos_router, prefix=prefix)
 app.include_router(certificados_router, prefix=prefix)
-
+app.include_router(numeraciones_sri_router, prefix=prefix)
+app.include_router(tipos_comprobante_router, prefix=prefix)
 
 # app.include_router(producto_router, prefix=prefix)
