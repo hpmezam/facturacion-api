@@ -29,10 +29,6 @@ def obtener_tipo_identificacion_por_id(id: int, db: Session = Depends(get_db)):
 def actualizar_tipo_identificacion(id: int, tipoIdentificacion: TipoIdentificacionUpdate, db: Session = Depends(get_db)):
     return actualizarTipoIdentificacion(db, id, tipoIdentificacion)
 
-@tipos_identificacion_router.delete('/{id}', status_code=204)
+@tipos_identificacion_router.delete('/{id}', status_code=200)
 def eliminar_tipo_identificacion(id: int, session: Session = Depends(get_db)):
-    """
-    Elimina un tipo de identificación por su ID.
-    Retorna un mensaje de confirmación si se elimina correctamente.
-    """
     return eliminarTipoIdentificacion(session, id)
