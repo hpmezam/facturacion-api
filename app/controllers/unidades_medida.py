@@ -53,3 +53,4 @@ def eliminarUnidadMedida(db: Session, id: int) -> dict:
     db.delete(unidad_medida)
     db.commit()
     return {"detail": f"Unidad de medida con id '{id}' eliminada correctamente."}
+

@@ -61,7 +61,7 @@ class ProductoUpdate(SQLModel):
     imagen_url: Optional[str] = None
     activo: bool 
     fecha_creacion: datetime 
-    fecha_actualizacion: datetime 
+    fecha_actualizacion: datetime
     
     #relaciones claves foraneas
     categoria_id: Optional[int] = None

@@ -16,7 +16,5 @@ class PrecioProducto(SQLModel, table=True):
     #relaciones claves foraneas
     producto_id: int = Field(foreign_key="producto.id", nullable=False)
     
-    # relaciones objetos relacionados
+    # relaciones objetos relacionados 
     producto: Optional['Producto'] = Relationship(back_populates='precioproductos')
-    
-    

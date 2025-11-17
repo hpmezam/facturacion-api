@@ -6,7 +6,8 @@ from app.models import (
     unidades_medida,
     impuestos,
     productos,
-    codigos_ice
+    codigos_ice, 
+    precios_productos
 )
 DATABASE_URL = "sqlite:///./facturacion.db"
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})

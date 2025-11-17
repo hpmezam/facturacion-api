@@ -2,17 +2,17 @@ from sqlmodel import SQLModel, Field
 from typing import Optional
 from decimal import Decimal
 
-class Impuesto(SQLModel):
+class ImpuestoBase(SQLModel):
     codigo_sri: str
     nombre: str
     porcentaje: Decimal
     descripcion: str
     activo: bool = True
 
-class ImpuestoCreate(Impuesto):
+class ImpuestoCreate(ImpuestoBase):
     pass
 
-class ImpuestoRead(Impuesto):
+class ImpuestoRead(ImpuestoBase):
     id: int
     pass
 

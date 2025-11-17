@@ -4,12 +4,13 @@ from sqlalchemy import Column, Integer
 from datetime import datetime
 from decimal import Decimal
 
-from app.models.categorias_producto import CategoriaProducto
-from app.models.unidades_medida import UnidadMedida
-from app.models.impuestos import Impuesto
-from app.models.codigos_ice import CodigoICE
-from app.models.precios_productos import PrecioProducto
-from app.models.codigos_barras import CodigoBarras
+if TYPE_CHECKING:
+    from app.models.categorias_producto import CategoriaProducto
+    from app.models.unidades_medida import UnidadMedida
+    from app.models.impuestos import Impuesto
+    from app.models.codigos_ice import CodigoICE
+    from app.models.precios_productos import PrecioProducto
+    from app.models.codigos_barras import CodigoBarras
 
 
 class Producto(SQLModel, table=True):
@@ -44,4 +45,4 @@ class Producto(SQLModel, table=True):
     codigoice: Optional['CodigoICE'] = Relationship(back_populates='productos')
     
     precioproductos: List['PrecioProducto'] = Relationship(back_populates='producto')
-    codigobarras: List['CodigoBarras'] = Relationship(back_populates='producto')
+    #codigobarras: List['CodigoBarras'] = Relationship(back_populates='producto')
