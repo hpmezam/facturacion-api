@@ -25,7 +25,7 @@ def obtenerGeneros(db: Session) -> list[GeneroRead]:
 
 # Obtener un género por ID
 def obtenerGeneroPorId(db: Session, id: int) -> GeneroRead:
-    # 1. Obtener objeto existente
+    # Obtener objeto existente
     genero = db.get(Genero, id)
     if not genero:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Género con id '{id}' no encontrado.")

@@ -4,6 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.routes.tipos_identificacion import tipos_identificacion_router
 from app.routes.categorias_producto import categorias_producto_router
 from app.routes.genero import genero_router
+from app.routes.tipo_persona import tipo_persona_router
+from app.routes.estado_civil import estado_civil_router
 # from app.routers.producto import producto_router
 
 app = FastAPI(title='Facturación - API')
@@ -24,6 +26,8 @@ prefix = '/api'
 app.include_router(tipos_identificacion_router, prefix=prefix)
 app.include_router(categorias_producto_router, prefix=prefix)
 app.include_router(genero_router, prefix=prefix)
+app.include_router(tipo_persona_router, prefix=prefix)
+app.include_router(estado_civil_router, prefix=prefix)
 
 
 # app.include_router(producto_router, prefix=prefix)

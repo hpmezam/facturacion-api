@@ -1,6 +1,6 @@
 from sqlmodel import Session, select
 from fastapi import HTTPException, status
-from app.models.tipos_identificacion import TipoIdentificacion
+from app.models.tipo_identificacion import TipoIdentificacion
 from app.schemas.tipos_identificacion import (
     TipoIdentificacionCreate,
     TipoIdentificacionRead,
@@ -25,7 +25,7 @@ def obtenerTipoIdentificacions(db: Session) -> list[TipoIdentificacionRead]:
 
 # Obtener un tipo de identificación por ID
 def obtenerTipoIdentificacionPorId(db: Session, id: int) -> TipoIdentificacionRead:
-    # 1. Obtener objeto existente
+    # Obtener objeto existente
     tipo_identificacion = db.get(TipoIdentificacion, id)
     if not tipo_identificacion:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Tipo de identificación con id '{id}' no encontrado.")
